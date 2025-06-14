@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
+
 @Service
 @RequiredArgsConstructor
 public class ClienteService {
@@ -13,6 +15,8 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
 
     public Flux<Cliente> buscarPrimeiros10() {
-        return clienteRepository.findAll().take(10);
+        return clienteRepository.findAll()
+                .take(10)
+                .delayElements(Duration.ofMillis(500));
     }
 }
